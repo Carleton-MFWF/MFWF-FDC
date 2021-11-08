@@ -8,7 +8,7 @@ function Vw = WingVelocity(r,c)                           % Free stream velocity
  
   
  r_WR = [Izz];           %  origin of wing root/ position vector of wing root
- t = ;                   % estimated flight time- probably input
+                   
  
  % R_I_B(TH)= ;  input = theta                                         % TH- standard rotation angle theta
  R1 = [1 0 0; 0 cos TH sin TH; 0 -sin TH cos TH];
@@ -25,7 +25,10 @@ function Vw = WingVelocity(r,c)                           % Free stream velocity
  % Wing movements definition 
  u= 1;    % upstroke 
  d = -1;  % downstroke 
+ 
  % left wing and right wing definition
+ l = 1;             % Left wing
+ r = -1;            % Right wing
  
 % Position vector of infinitesimal point on body frame(r_B); spar frame (r_S), and planform (r_P)
 r_P = [0; r; -c];                           %Position vector of infinitesimal point on wing planform (r_P)
