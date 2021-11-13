@@ -5,7 +5,6 @@ function Vw = WingVelocity(r,c)                           % Free stream velocity
 % wp-Wing planform; 
 
  r_C.G = [0 0 0];        % Centre of gravity of body frame.
- 
   
  r_WR = [Izz];           %  origin of wing root/ position vector of wing root
                    
@@ -27,8 +26,8 @@ function Vw = WingVelocity(r,c)                           % Free stream velocity
  d = -1;  % downstroke 
  
  % left wing and right wing definition
- l = 1;             % Left wing
- r = -1;            % Right wing
+ s = 1;             % Left wing
+ s = -1;            % Right wing
  
 % Position vector of infinitesimal point on body frame(r_B); spar frame (r_S), and planform (r_P)
 r_P = [0; r; -c];                           %Position vector of infinitesimal point on wing planform (r_P)
@@ -42,11 +41,19 @@ Wb_B = transpose(R_I_B);                % angular velocity of body frame with re
 V_r = @(s, phi) R_WR_S(s, phi)) * Wb_B * r_B;          % FINAL 1
 
 if s = 1 & u = 1 
-V_r_u = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % right and left wing upstroke
+V_r_u = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing upstroke
+end 
+
+if s = 1 & d = -1 
+V_r_u = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing downstroke
 end 
 
 if s = -1 & d = -1
-V_r_d = @(s, phi) R_WR_S(s, phi)* d * Wb_B * r_B;  % right and left wing downstroke 
+V_r_d = @(s, phi) R_WR_S(s, phi)* d * Wb_B * r_B;  % right wing downstroke 
+end 
+
+if s = -1 & u = 1
+V_r_d = @(s, phi) R_WR_S(s, phi)* d * Wb_B * r_B;  % right wing upstroke 
 end 
 
 % Velocity due to rigid body translation
@@ -60,9 +67,11 @@ end
 
 
 %Velocity due to wing flapping
-% dR_WR_S = diff (@(s, phi) R_WR_S(s, phi), t);      % differential with respect to time of wing root with respect to time in spar frame
 
-V_f = @(s, phi) R_WR_S(s, phi) * dR_WR_S * r_S;                   % FINAL 3
+delta = diff( @(s, phi) R_WR_S(s, phi))
+dR_WR_S= delta(:,3)./delta(:,2)./delta(:,3);    %division of element by element
+
+V_f = @(s, phi) R_WR_S(s, phi) * diff (@(s, phi) R_WR_S(s, phi)) * r_S;                   % FINAL 3
 
 Vw = V_r + V_t + V_f;                 % Free stream velocity over an incremental area of wing planform (Addition of FINAL 1 to FINAL 3) 
 
