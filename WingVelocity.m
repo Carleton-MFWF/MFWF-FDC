@@ -45,7 +45,7 @@ V_r_u = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing upstroke
 end 
 
 if s = 1 & d = -1 
-V_r_u = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing downstroke
+V_r_d = @(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing downstroke
 end 
 
 if s = -1 & d = -1
@@ -68,9 +68,9 @@ end
 %Velocity due to wing flapping
 
 delta = diff( @(s, phi) R_WR_S(s, phi));
-dR_WR_S= delta(:,3)./delta(:,2)./delta(:,1);    %division of element by element
+dR_WR_S= delta(:,3)./delta(:,2)./delta(:,1);    %division of element by element for 3 columns
 
-V_f = @(s, phi) R_WR_S(s, phi) * diff (@(s, phi) R_WR_S(s, phi)) * r_S;                   % FINAL 3
+V_f = @(s, phi) R_WR_S(s, phi) * dR_WR_S * r_S;                   % FINAL 3
 
 Vw = V_r + V_t + V_f;                 % Free stream velocity over an incremental area of wing planform (Addition of FINAL 1 to FINAL 3) 
 
