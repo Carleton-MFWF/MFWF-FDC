@@ -1,5 +1,5 @@
 %Estimation of wing velocity
-function Vw = WingVelocity(r,c)                           % Free stream velocity on planform frame with respect to wing spar length and chord length              
+function Vw = WingVelocity(Vb, r,c)                           % Free stream velocity on planform frame with respect to wing spar length and chord length              
 
 % Definitions: B-Body Frame; S-Spar Frame; P- Planform Frame; wr- Wing Root; ws-Wing Spar;
 % wp-Wing planform; 
@@ -59,7 +59,6 @@ end
 % Velocity due to rigid body translation
 
  r_WR_CG = r_WR - r_CG;    % position vector for centre of gravity of rigid body to wing root on body frame
- Vb =[ ]                  % Linear velocity of rigid body in body frame - as an input
  
  V_b_B = Vb + (Wb_B * r_WR_CG)       % evaluation of rigid body velocity of body frame
  
@@ -68,8 +67,8 @@ end
 
 %Velocity due to wing flapping
 
-delta = diff( @(s, phi) R_WR_S(s, phi))
-dR_WR_S= delta(:,3)./delta(:,2)./delta(:,3);    %division of element by element
+delta = diff( @(s, phi) R_WR_S(s, phi));
+dR_WR_S= delta(:,3)./delta(:,2)./delta(:,1);    %division of element by element
 
 V_f = @(s, phi) R_WR_S(s, phi) * diff (@(s, phi) R_WR_S(s, phi)) * r_S;                   % FINAL 3
 
