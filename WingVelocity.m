@@ -10,13 +10,15 @@ function Vw = WingVelocity(Vb, r, c, s,  phi, a, alpha_p, theta)                
  
  % Rotation of rigid body from inertial frame to body frame
  R_I_B = (@(theta) R_I_B(theta));
- 
+
  % rotation of body frame in spar frame coordinates
- R_B_S = (@(s, phi) R_WR_S(s, phi)) * (@(a, alpha_p) R_S_P(a, alpha_p)); 
+ R_WR_S = (@(s, phi) R_WR_S(s, phi));
  
- % rotation of spar frame to wing planform frame coordinates
+  % rotation of spar frame to wing planform frame coordinates
  R_S_P = (@(a, alpha_p) R_S_P(a, alpha_p));
 
+ R_B_S = R_WR_S * R_S_P; 
+ 
  % Wing movements definition 
  u= 1;    % upstroke 
  d = -1;  % downstroke 
@@ -33,22 +35,22 @@ r_S = R_P_S * r_P;                          % Position vector of infinitesimal p
 % Velocity due to rigid body rotation
 
 Wb_B = transpose(@(theta) R_I_B(theta));                % angular velocity of body frame with respect to changng theta with time                   % 
-V_r = (@(s, phi) R_WR_S(s, phi)) * Wb_B * r_B;           % FINAL 1
+V_r = R_WR_S * Wb_B * r_B;           % FINAL 1
 
-if s = 1 & u = 1 
-V_r = (@(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % left wing upstroke
+if s == 1 && u == 1 
+V_r = R_WR_S * u * Wb_B * r_B;  % left wing upstroke
 end 
 
-if s = 1 & d = -1 
-V_r = (@(s, phi) R_WR_S(s, phi))*d * Wb_B * r_B;  % left wing downstroke
+if s == 1 && d == -1 
+V_r = R_WR_S * d * Wb_B * r_B;  % left wing downstroke
 end 
 
-if s = -1 & d = -1
-V_r = (@(s, phi) R_WR_S(s, phi))* d * Wb_B * r_B;  % right wing downstroke 
+if s == -1 && d == -1
+V_r = R_WR_S * d * Wb_B * r_B;  % right wing downstroke 
 end 
 
-if s = -1 & u = 1
-V_r = (@(s, phi) R_WR_S(s, phi))* u * Wb_B * r_B;  % right wing upstroke 
+if s == -1 && u == 1
+V_r = R_WR_S * u * Wb_B * r_B;  % right wing upstroke 
 end 
 
 % Velocity due to rigid body translation
@@ -62,16 +64,14 @@ end
 
 %Velocity due to wing flapping
 
-delta = (@(s, phi) R_WR_S(s, phi));
+delta = R_WR_S;
 dR_WR_S = gradient(delta);
 
-%temp = arrayfun(@(colidx) diff(delta(:,colidx), colidx-1), 1:size(delta,2), 'uniform', 0);
-%dR_WR_S = [temp{:}];
+temp = arrayfun(@(colidx) diff(delta(:,colidx), colidx-1), 1:size(delta,2), 'uniform', 0);
+dR_WR_S = [temp{:}];
 
-V_f = (@(s, phi) R_WR_S(s, phi)) * dR_WR_S * r_S;                   % FINAL 3
+V_f = R_WR_S * dR_WR_S * r_S;                   % FINAL 3
 
 Vw = V_r + V_t + V_f;                % Free stream velocity over an incremental area of wing planform (Addition of FINAL 1 to FINAL 3) 
 
 end
-
-
