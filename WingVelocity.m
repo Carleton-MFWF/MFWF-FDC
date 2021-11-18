@@ -1,11 +1,12 @@
 %Estimation of wing velocity
-function Vw = WingVelocity(Vb, r, c, s,  phi, a, alpha_p, theta)                           % Free stream velocity on planform frame with respect to wing spar length and chord length              
+function Vw = WingVelocity(Vb, s,  phi, a, alpha_p, theta)                           % Free stream velocity on planform frame with respect to wing spar length and chord length              
 
 % Definitions: B-Body Frame; S-Spar Frame; P- Planform Frame; wr- Wing Root; ws-Wing Spar;
 % wp-Wing planform; 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SIMULINK %%%%%%%%%%%%%%%%%%%%%%%%%%
  r_CG = [0;0;0];        % Centre of gravity of body frame.
- r_WR = [0;0;-c];       % origin of wing root/ position vector of wing root
+ r_WR = [0;1;1];       % origin of wing root/ position vector of wing root
  r_WR_CG = r_CG - r_WR;                 
  
  % Rotation of rigid body from inertial frame to body frame
@@ -27,16 +28,30 @@ r_S_P = R_S_P(a, alpha_p);
  s = 1;             % Left wing
  s = -1;            % Right wing
  
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %syms r c;
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEPENDS ON R AND C %%%%%%%%%%%55
 % Position vector of infinitesimal point on body frame(r_B); spar frame (r_S), and planform (r_P)
 r_P = [0; r; -c];                           % Position vector of infinitesimal point on wing planform (r_P)
 r_B = (r_CG - r_WR)+ r_WR_S * r_S_P * r_P;  % Position vector of infinitesimal point on rigid body (r_B)
 r_S = r_S_P * r_P;                          % Position vector of infinitesimal point on spar frame (r_S)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 % Velocity due to rigid body rotation
-
+% SIMULINK %%%%%%%%%
 Wb_B = transpose(r_I_B);                % angular velocity of body frame with respect to changng theta with time                   % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HALF & HALF
+
 V_r = r_WR_S * Wb_B * r_B;           % FINAL 1
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+ % SIMULINK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if s == 1 && u == 1 
 V_r = r_WR_S * u * Wb_B * r_B;  % left wing upstroke
 end 
@@ -52,15 +67,22 @@ end
 if s == -1 && u == 1
 V_r = r_WR_S * u * Wb_B * r_B;  % right wing upstroke 
 end 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 % Velocity due to rigid body translation
 
+% SIMULINK%%%%%%%%%%%%%%%%%%%%%%%%%
  r_WR_CG = r_WR - r_CG;    % position vector for centre of gravity of rigid body to wing root on body frame
- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%   SIMULINK %%%%%%%%%%%%%%%%%%%%%%%%
  V_b_B = Vb + (Wb_B * r_WR_CG)       % evaluation of rigid body velocity of body frame
  
+ 
  V_t = R_B_S * V_b_B;                % FINAL 2
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Velocity due to wing flapping
 
