@@ -29,7 +29,7 @@ r_S_P = R_S_P(a, alpha_p);
  s = -1;            % Right wing
  
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- %syms r c;
+ syms r c;
  
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEPENDS ON R AND C %%%%%%%%%%%55
 % Position vector of infinitesimal point on body frame(r_B); spar frame (r_S), and planform (r_P)
