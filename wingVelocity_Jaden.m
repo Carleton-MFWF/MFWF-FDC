@@ -1,6 +1,6 @@
 % Estimation of wing velocity
 % Free stream velocity on planform frame with respect to wing spar length and chord length
-function Vw = wingVelocity(Vb, s,  phi, a, alpha_p, theta, dR_WR_S)
+function Vw = wingVelocity_Jaden(Vb, s,  phi, a, alpha_p, theta, dR_WR_S)
 
 % Definitions: B-Body Frame; S-Spar Frame; P- Planform Frame; wr- Wing Root; ws-Wing Spar;
 % wp-Wing planform; 

@@ -31,8 +31,8 @@ output3 = double(int(int(g,q,0,4),0,4));
 %}
 
 % Declare r and c:
-%syms r;
-%syms c;
+syms r;
+syms c;
 
 % Generate the inputs required:
 Vb = [0.5;0.5;0.5];
@@ -46,9 +46,16 @@ p = 1.225;
 psi = pi()/4;
 
 % Wing dimensions:
-c_max = 0.2;
-r_max = 0.4;
+c_max = 0.5;
+r_max = 1;
 
+% Calculate the magnitude of the wing velocity:
+
+%Vw = WingVelocity(Vb, s, phi, a, alpha_p, theta);
+
+%psi = atan(Vw(3)/Vw(2));
+
+Vw = norm(WingVelocity(Vb, s, phi, a, alpha_p, theta));
 
 % Generate the rotational matrix from the V to the P frame:
 
@@ -67,10 +74,6 @@ liftCoeff = 1.58*sin((2.13*alpha_p)-(7.2*(pi()/180))) + 0.225;
 dragCoeff = 1.92 - 1.55*cos((2.04*alpha_p)-(9.82*(pi()/180)));
 
 densityCoeff = p/2;
-
-% Calculate the magnitude of the wing velocity:
-
-Vw = norm(WingVelocity(Vb, s, phi, a, alpha_p, theta));
 
 % Calculate the infinitesimal lift and drag:
 
@@ -111,10 +114,7 @@ r_WR_S = R_WR_S(s, phi);
  
 % rotation of body frame in spar frame coordinates
 R_B_S = r_WR_S *  r_S_P; 
- 
-% Wing movements definition 
-u= 1;    % upstroke 
-d = -1;  % downstroke 
+
  
 % left wing and right wing definition
 s = 1;             % Left wing

@@ -9,8 +9,8 @@ psi = pi()/4;
 syms r;
 syms c;
 
-r_max = 2;
-c_max = 1;
+r_max = 0.1;
+c_max = 0.05;
 
 
 % Calculate the coefficients:
@@ -24,7 +24,7 @@ dragCoeff = 1.92 - 1.55*cos((2.04*alpha)-(9.82*(pi()/180)));
 
 % Calculate the magnitude of the wing velocity:
 
-wingVelocity_P = wingVelocity(V_b, wingDef, phi, strokeDef, alpha, theta_b, rotationalDerivative);
+wingVelocity_P = wingVelocity_Jaden(V_b, wingDef, phi, strokeDef, alpha, theta_b, rotationalDerivative);
 
 wingVelocityMagnitude = norm(wingVelocity_P);
 
