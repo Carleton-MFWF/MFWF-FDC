@@ -21,16 +21,6 @@ r_S_P = R_S_P(a, alpha_p);
 
  R_B_S = r_WR_S * r_S_P; 
  
- %{
- % Wing movements definition 
- u= 1;    % upstroke 
- d = -1;  % downstroke 
- 
- % left wing and right wing definition
- s = 1;             % Left wing
- s = -1;            % Right wing
- %}
- 
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  syms r c;
  

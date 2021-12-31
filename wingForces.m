@@ -1,6 +1,6 @@
 function wingForce = wingForces(V_b, theta_b, alpha, phi, rotationalDerivative, wingDef, strokeDef)
 
-% THIS LINE OF CODE IS TEMPORARY AND MUST BE REMOVED
+% THIS LINE OF CODE IS A PLACEHOLDER FOR FURTHER CALCULATIONS
 psi = pi()/4;
 
 
@@ -14,6 +14,7 @@ c_max = 0.05;
 
 
 % Calculate the coefficients:
+
 
 densityCoeff = 1.225/2;
 
