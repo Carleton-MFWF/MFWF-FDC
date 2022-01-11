@@ -6,7 +6,7 @@ function generate_controller_code()
 
 % Use the Simulink Coder API to generate code for controllerModel:
 
-controllerModel = 'feedback_control';
+controllerModel = 'MFWF_control';
 
 if(~bdIsLoaded(controllerModel))
     open_system(controllerModel);
