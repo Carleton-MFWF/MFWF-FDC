@@ -11,9 +11,9 @@ controllerModel = 'MFWF_control';
 if(~bdIsLoaded(controllerModel))
     open_system(controllerModel);
 end
-
 slbuild(controllerModel);
 coder.report.generate(controllerModel);
+
 
 end
 
