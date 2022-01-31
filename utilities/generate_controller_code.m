@@ -14,6 +14,6 @@ end
 slbuild(controllerModel);
 coder.report.generate(controllerModel);
 
-
+system('utilities\copy_headers.bat');
 end
 
