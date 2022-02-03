@@ -1,11 +1,11 @@
-function [w, v] = Forces (F, M)
+%function [v_b w_b] = Forces (F, M)
 
 %Rigid Body Model
 
 m = 0.04;                     % mass of MFWF in kg
 g = 9.81;                   % acceleration due to gravity (in m/s2)
 
-W_Component =
+%W_Component = [0; 0; -g];
 
 x_b = 0.05;                       % Breadth of body frame (in metres)
 y_b = 0.25;                       % Length of body frame (in metres)
@@ -14,6 +14,8 @@ z_b = 0.15;                       % Height of flyer (in metres)
 syms tx                        % theta 
 syms ty                        % theta
 syms tz                        % theta
+
+syms v_b_x  v_b_y  v_b_z  w_b_x  w_b_y  w_b_z;       % translational velocity and angular velocity
 
 tx = 30;
 ty = 30;
@@ -43,6 +45,35 @@ I_zz = (square(x_b) + square(y_b)) * m;
 I = [I_xx  0  0;
      0  I_yy  0;
      0   0  I_zz];
+ 
+  % Method 1
+ % Forces and moment equations using 6 unknowns, 6 equations solver
+ 
+ Fx = 0.75;
+ Fy = 0.00;
+ Fz = 1.00;
+ Mx = -0.125;
+ My = -0.0562;
+ Mz = 0.0938;
+ 
+ syms v_b_x  v_b_y  v_b_z  w_b_x  w_b_y  w_b_z;
+ 
+ w_b_x = v_b_x;
+ w_b_y = v_b_y;
+ w_b_z = v_b_z; 
+ 
+ eq1 = (0.4 * v_b_x) + 0.4 * ((w_b_y * v_b_z)-(w_b_z * v_b_y)) - Fx == 0;
+ eq2 = (0.4 * v_b_y) + 0.4 * ((w_b_z * v_b_x)-(w_b_x * w_b_z)) - Fy == 0;
+ eq3 = (0.4 * v_b_z) + 0.4 * ((w_b_x * v_b_y) - (w_b_y * v_b_x)) - Fz == 0;
+ eq4 = (I_xx * w_b_x) + (w_b_x * (I_yy - I_zz) * w_b_x) - Mx == 0;
+ eq5 = (I_yy * w_b_y) + (w_b_y * (I_zz - I_xx) * w_b_y) - My == 0;
+ eq6 = (I_zz * w_b_z) + (w_b_z * (I_xx - I_yy)* w_b_z) - Mz == 0;
+ 
+ Eq = [eq1, eq2, eq3, eq4, eq5, eq6];
+ vars = [v_b_x, v_b_y, v_b_z, w_b_x, w_b_y, w_b_z];
+ sol = solve(Eq, vars);
+
+ A = double([sol.v_b_x; sol.v_b_y; sol.v_b_z; sol.w_b_x; sol.w_b_y; sol.w_b_z])
  
  
      
