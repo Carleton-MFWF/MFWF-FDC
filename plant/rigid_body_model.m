@@ -75,7 +75,13 @@ I = [I_xx  0  0;
 
  A = double([sol.v_b_x; sol.v_b_y; sol.v_b_z; sol.w_b_x; sol.w_b_y; sol.w_b_z])
  
- 
+ %Method 2
+ % Moment in x-direction
+tspan = [0 5];
+x0 = 5000;
+%[t,x] = ode45(@(t,x), (Mx/I_xx) - (x^2), tspan; x0);
+[t,x] = ode45(@(t,x) -1.5625 - (x^2), tspan, x0);
+plot (t,x,'b')
      
      
      
