@@ -77,11 +77,42 @@ I = [I_xx  0  0;
  
  %Method 2: Uising first order non-linear oDE
  % Moment in x-direction
+% Moment in x-direction
 tspan = [0 5];
-x0 = 5000;
+x0 = 0.5;
 %[t,x] = ode45(@(t,x), (Mx/I_xx) - (x^2), tspan; x0);
 [t,x] = ode45(@(t,x) -1.5625 - (x^2), tspan, x0);
-plot (t,x,'b')
+%plot (t,x,'b')
+
+% Moment in y-direction
+tspan = [0 5];
+y0 = 0.5;
+%[t,x] = ode45(@(t,x), (My/I_yy) - (x^2), tspan; x0);
+[t,y] = ode45(@(t,y) -0.7025 - (y^2), tspan, y0);
+%plot (t,y,'b')
+
+% Moment in z-direction
+tspan = [0 5];
+z0 = 0.5;
+%[t,x] = ode45(@(t,x), (My/I_yy) - (x^2), tspan; x0);
+[t,z] = ode45(@(t,z) -1.1725 - (z^2), tspan, z0);
+
+%plot (t,z,'b')
+
+figure(1)
+plot (t, x, 'b', t, y, 'b', t, z, 'b')
+
+%plot(t, x, 'b')
+%hold on
+%plot(t, y, 'y')
+%plot(t, z, 'r')
+%hold off
+grid
+xlabel('Time (s)')
+ylabel ('Angular velocity (rad/s, E-14)')
+title('Instantenous angular velocity vs time')
+%legend('w_x', 'w_y', 'w_z', 'Location', 'SW')
+
      
      
      
