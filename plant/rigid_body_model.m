@@ -3,12 +3,12 @@
 % The system is modelled as an ODE, with q defined as a 12- element state
 % vector
 
-function qDOT = rigid_body_model (t, q, m, I, FM_at_t)
+function qDOT = rigid_body_model(t, q, m, I, FM_at_t)
 
 g = 9.81;                   % acceleration due to gravity (in m/s2)
 
 % extracting forces and moments
-FM = FbMb_at_t(t);
+FM = FM_at_t(t);
 F = FM(1:3);            % Force vector
 M = FM(4:6);            % Moment vector
 
@@ -16,7 +16,7 @@ M = FM(4:6);            % Moment vector
 v_B   = q(1:3);           % (m/s), translational velocity
 w     = q(4:6);           % (rad/s), angular velocity
 e     = q(7:9);           % (rad/s), euler angles
-PosI = q(10:12);         % (m), Inertia frames position
+PosI = q(10:12);          % (m), Inertia frames position
 
 % Force equation, F = m * V_B + m * w_x_v) Translational equation of motion
 vDOT = F/M - cross(w, v_B);
@@ -29,8 +29,8 @@ eDOT = LOC_get_eDOT(w,e);
 
 %Inertial Velocity
 R_I_B = LOC_get_R_I_B(e);
-B_I_R = R_I_B.';
-PosIDOT = B_I_R * [0; 0; g] * v_B ;        
+%B_I_R = R_I_B.';
+PosIDOT = R_I_B * [0; 0; g] * v_B ;        
 
 % assembling the final derivative vector
 qDOT = [vDOT;
@@ -72,9 +72,8 @@ end
 %I_yy = 0.001;
 %I_zz = 0.0026;
 
-I = [0.0034  0  0;
-     0  0.001  0;
-     0   0  0.0026];
+%K = [0.0034  0  0; 0  0.001  0; 0   0  0.0026;];
+I = [ 0.0034 0 0 ; 0 0.001 0 ; 0 0 0.0026 ];
  
  %Flyer Initial Conditions
  v_B_Initial = [0;0;0];     % (m/s) initial velocity in body axes
@@ -87,8 +86,8 @@ I = [0.0034  0  0;
  q_Initial = [VDOT_Initial;
                 wDOT_Initial;
                 eDOT_Initial;
-                PosIDOT_Initial];
-            
+                PosIDOT_Initial;];
+           
 %Solving the System
 % FM_at_t = @(t)     to get input of forces and moments
 dqdt_at_t = @ (t,q) rigid_body_model(t, q, m, I, FM_at_t);
@@ -98,10 +97,10 @@ t_span = [0 60];    % sec, [tstart tend]
 my_options = odeset('ReTol', 1e-7, 'AbsTol', 1e-7);          % seconds
 
 % using ODE solver
-[T, Q] = ode45(dqdt_at_t, tspan, q_Initial, my_options);
+[T, qDOT] = ode45(dqdt_at_t, tspan, q_Initial, my_options);
 
 figure 1;
-plot(T,Q, 'b')
+plot(T, qDOT, 'b')
  
 
 
