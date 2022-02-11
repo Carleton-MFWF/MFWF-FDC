@@ -3,7 +3,7 @@
 % The system is modelled as an ODE, with q defined as a 12- element state
 % vector
 
-function qDOT = rigid_body_model(t, q, m, I, FM_at_t)
+function qDOT = rigid_body_model(t, q, M, I, FM_at_t)
 
 g = 9.81;                   % acceleration due to gravity (in m/s2)
 
@@ -46,7 +46,7 @@ ph = e(1);
 th = e(2);
 ps = e(3);
 
-R_I_B = [cos(th)*cps              cos (th)*sps              -sin(th);
+R_I_B = [cos(th)*cos(ps)              cos (th)*sin(ps)              -sin(th);
                sin(ph)*sin(th)*cos(ps)-cos(ph)*sin(ps)  sin(ph)*sin(th)*sin(ps)+cos(ph)*cos(ps)  sin(ph)*cos(th);
                cos(ph)*sin(th)*cos(ps)+sin(ph)*sin(ps)  cos(ph)*sin(th)*sin(ps)-sin(ph)*cos(ps)  cos(ph)*cos(th)];
 end
