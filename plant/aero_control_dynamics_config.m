@@ -12,13 +12,13 @@ Nmm2Nm = 1/1000;
 
 %% Data Tables
 % pitch
-pitch_force = readtable('./data/control_dynamics/pitch_force.csv');
-pitch_moment = readtable('./data/control_dynamics/pitch_moment.csv');
+pitch_force = readtable('pitch_force.csv');
+pitch_moment = readtable('pitch_moment.csv');
 
 % roll
-roll_force = readtable('./data/control_dynamics/roll_force.csv');
-roll_moment = readtable('./data/control_dynamics/roll_moment.csv');
+roll_force = readtable('roll_force.csv');
+roll_moment = readtable('roll_moment.csv');
 
 % yaw
-yaw_force = readtable('./data/control_dynamics/yaw_force.csv');
-yaw_moment = readtable('./data/control_dynamics/yaw_moment.csv');
+yaw_force = readtable('yaw_force.csv');
+yaw_moment = readtable('yaw_moment.csv');
