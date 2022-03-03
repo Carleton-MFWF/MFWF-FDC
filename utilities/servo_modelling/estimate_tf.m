@@ -5,7 +5,7 @@ close all;
 T = readtable('data2.csv');
 
 % input time step from output timestamps
-Ts = 16.62732131;
+Ts = 16.62732131/1000;
 
 data = iddata(T.y,T.u,Ts);
 
@@ -18,7 +18,6 @@ dataDict =  Simulink.data.dictionary.open('servo.sldd');
 
 %%
 [num, den] = tfdata(sys, 'v');
-
 designData = getSection(dataDict,'Design Data');
 
 if exist(designData,'tf_num')

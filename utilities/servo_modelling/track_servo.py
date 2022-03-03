@@ -30,6 +30,8 @@ args = vars(ap.parse_args())
 redLower = (127, 50, 50)
 redUpper = (255, 255, 255)
 
+
+
 # if a video path was not supplied, grab the reference
 # to the webcam
 if not args.get("video", False):
@@ -40,6 +42,12 @@ else:
     fps = vs.get(cv2.CAP_PROP_FPS)
     timestamps = [vs.get(cv2.CAP_PROP_POS_MSEC)]
     calc_timestamps = [0.0]
+    
+    width = int(vs.get(cv2.CAP_PROP_FRAME_WIDTH) + 0.5)
+    height = int(vs.get(cv2.CAP_PROP_FRAME_HEIGHT) + 0.5)
+    size = (width, height)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('capture.avi', fourcc, 20.0, size)
 # allow the camera or video file to warm up
 time.sleep(2.0)
 
@@ -110,6 +118,7 @@ while True:
     frame = cv2.circle(frame, servo_center, 20, (0,0,255))
     # show the frame to our screen
     cv2.imshow("Frame", frame)
+    out.write(frame)
     key = cv2.waitKey(1) & 0xFF
     # if the 'q' key is pressed, stop the loop
     if key == ord("q"):
