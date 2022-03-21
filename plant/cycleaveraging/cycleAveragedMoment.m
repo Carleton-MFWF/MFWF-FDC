@@ -1,25 +1,26 @@
 function M = cycleAveragedMoment(alpha,omega_LW,omega_RW)
 % mx is yawing/ my is pitching/ mz is rolling
-A_RW = pi/2; % Right wing amplitude 
+A_RW = pi/2; % wing amplitude 
 A_LW = pi/2;
-k_D = 1.225 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha - 9.82 * pi/180)) * 0.00000417;
-k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * 0.00000417;
-deltaA = 0;
-J = besselj(1,A_LW);
-J1 = besselj(1,A_LW + deltaA);
-H = StruveH1(A_LW);
-H1 = StruveH1(A_LW + deltaA);
+k_D = 1.225 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha - 9.82 * pi/180)) * 0.00000417; %Calculation base on coefficient drag
+k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * 0.00000417; %Calculation base on coefficient lift
+% I_A is area moment of inertia of wing planform
+deltaA = 0; %wing amplitude adjustment
+J = besselj(1,A_LW); %Bessel function of order 1
+J1 = besselj(1,A_LW + deltaA); %Bessel function of order 1 at the wing amplitude change adjustment
+H = StruveH1(A_LW); %Struve function of order 1
+H1 = StruveH1(A_LW + deltaA); %Struve function of order 1 at the wing amplitude change adjustment
 eta_RW = pi/4; %wing bias
 eta_LW = pi/4;
-delta_RW = 0; % delta and sigma is split cycle
+delta_RW = 0; %split cycle upstroke
 delta_LW = 0;
-sigma_RW = 0;
+sigma_RW = 0; %split cycle downstroke
 sigma_LW = 0;
 w = 5; % vehicle width
-x_cp = 0;
+x_cp = 0; % location of wing center of pressure in local wing planform frame
 y_cp = 2.5;
 z_cp = 7.5;
-deltax = 2.5;
+deltax = 2.5; %vector from center of gravity to left or right wing root in body frame.
 deltaz = 0;
 
 Mx_RW = A_RW * omega_RW * (omega_RW - delta_RW) * 0.5 * (J * sin(eta_RW) * (-k_D * (sin(alpha) * z_cp + deltaz) - cos(alpha) * z_cp * k_L - y_cp * k_L * cos(eta_RW) / sin(eta_RW)) - w * k_L * A_RW * 0.25) + k_D * A_RW * omega_RW * (omega_RW + sigma_RW) * 0.25 * (sin(alpha) * z_cp + deltaz) * (J * sin(eta_RW) - H * cos(eta_RW)) - k_L * A_RW * omega_RW * (omega_RW + sigma_RW) * 0.25 * (-cos(alpha) * z_cp * (J * sin(eta_RW) - H * cos(eta_RW)) + y_cp * (J * cos(eta_RW) + H * sin(eta_RW)) + w * A_RW * 0.25) + k_D * (A_RW + deltaA) * omega_RW * (omega_RW + sigma_RW) * 0.25 * (sin(alpha) * z_cp + deltaz) * (J1 * sin(eta_RW) + H1 * cos(eta_RW)) - k_L * (A_RW + deltaA) * omega_RW * (omega_RW + sigma_RW) * 0.25 * (-cos(alpha) * z_cp * (J1 * sin(eta_RW) + H1 * cos(eta_RW)) + y_cp * (J1 * cos(eta_RW) - H1 * sin(eta_RW)) + w * (A_RW + deltaA) * 0.25);
