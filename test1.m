@@ -1,11 +1,11 @@
 clear;
 clc;
 
-omega_RW = 10*pi/180;
-omega2_RW = 30*pi/180;
-omega3_RW = 20*pi/180;
+omega_RW = 10*2*pi;
+omega2_RW = 20*2*pi;
+omega3_RW = 30*2*pi;
 n=100
-x = linspace(-3*pi/2,pi/2,100);
+x = linspace(0,pi/2,100);
 y = zeros(n,1);
 y2 = zeros(n,1);
 y3 = zeros(n,1);
@@ -22,6 +22,6 @@ plot(x,y);
 plot(x,y2);
 plot(x,y3);
 
-legend("10 Hz", "30 Hz", "20 Hz");
+legend("10 Hz", "20 Hz", "30 Hz");
 
 

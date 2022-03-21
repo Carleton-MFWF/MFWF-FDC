@@ -13,7 +13,7 @@ function Z_RW = cycleaveraging2(alpha1,omega_RW)
 
 A_RW = pi/2;
 k_D = 1 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha1 - 9.82 * pi/180)) * 1;
-J = besselj(1,1);
+J = besselj(1,A_RW);
 
 Z_RW = k_D * A_RW * J * (A_RW) * omega_RW * (omega_RW) * 1 * 0.5 - k_D * omega_RW * (omega_RW) * 0.25 * (A_RW * (J * (A_RW) * 1)) - k_D * omega_RW * (omega_RW) * 0.25 * (A_RW) * (J * (A_RW) * 1);
  
