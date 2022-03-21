@@ -1,5 +1,5 @@
 function F = cycleAveragedForce(alpha, omega_LW, omega_RW)
-A_RW = pi/2; 
+A_RW = pi/2; % wing amplitude 
 A_LW = pi/2;
 k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * 0.00000417; %Calculation base on coefficient lift
 k_D = 1.225 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha - 9.82 * pi/180)) * 0.00000417; %Calculation base on coefficient drag
