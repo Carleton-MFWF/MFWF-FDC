@@ -1,4 +1,5 @@
-function M1 = cycleaveragingforce(alpha,omega_LW,omega_RW)
+function F = cycleAveragedForce(alpha, omega_LW, omega_RW)
+
 A_RW = pi/2;
 A_LW = pi/2;
 k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * 0.00000417;
@@ -23,6 +24,6 @@ X_RW = k_D * A_RW * J_1 * (A_RW) * omega_RW * (omega_RW - delta_RW) * cos(eta_RW
 X_LW = k_D * A_LW * J_1 * (A_LW) * omega_LW * (omega_LW - delta_LW) * cos(eta_LW) * 0.5 - k_D * omega_LW * (omega_LW + sigma_LW) * 0.25 * (A_LW * (J_1 * (A_LW) * cos(eta_LW) + H_1 * (A_LW) * sin(eta_LW))) - k_D * omega_LW * (omega_LW + sigma_LW) * 0.25 * (A_LW + deltaA) * (J_1 * (A_LW + deltaA) * cos(eta_LW) + H_1 * (A_LW + deltaA) * sin(eta_LW));
 X = X_RW + X_LW;
 
-M1 = [X,Y,Z];
+F = [X,Y,Z];
 
 end
