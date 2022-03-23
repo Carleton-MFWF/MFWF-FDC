@@ -2,13 +2,21 @@ function M = cycleAveragedMoment(alpha,omega_LW,omega_RW)
 %% Constants
 
 % wing amplitude 
-A_RW = pi/2; % [rad]
-A_LW = pi/2; % [rad]
+A_RW = pi/2;    % [rad]
+A_LW = pi/2;    % [rad]
+
+% wing parameters
+r = 10e-2;      % [m] wing length
+c = 5e-2;       % [m] wing chord 
+
+% Second moment of area of rectangular wing about wing root
+% TODO change to numerical calculation based on actual wing shape
+I_A = r^3*c/3;  % [m^4]
 
 % Calculation base on coefficient drag
-k_D = 1.225 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha - 9.82 * pi/180)) * 0.00000417; 
+k_D = 1.225 * 0.5 * (1.92 - 1.55 * cos(2.04 * alpha - 9.82 * pi/180)) * I_A; 
 % Calculation base on coefficient lift
-k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * 0.00000417; 
+k_L = 1.225 * 0.5 * (0.225 + 1.58 * sin(2.13 * alpha - 7.2 * pi/180)) * I_A; 
 
 % I_A is area moment of inertia of wing planform
 deltaA = 0; %wing amplitude adjustment
@@ -40,7 +48,7 @@ y_cp = 2.5e-2;  % [m]
 z_cp = 7.5e-2;  % [m]
 
 %vector from center of gravity to left or right wing root in body frame.
-deltaz = 2.5e-2;% [m]1
+deltaz = 2.5e-2;% [m]
 deltax = 0;     % [m]
 
 %% Account for NaN generated when wing bias is zero
