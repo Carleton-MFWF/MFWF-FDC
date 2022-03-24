@@ -2,13 +2,13 @@
 % F_x, F_y, F_z - gf
 % M_x, M_y, M_z - Nmm
 
-%% flapping frequency gain constants
-K_w_F = 1; % [1/Hz]
-K_w_M = 1; % [1/Hz]
-
-%% conversions
-gf2N = 1/101.971621;
-Nmm2Nm = 1/1000;
+% %% flapping frequency gain constants
+% K_w_F = 1; % [1/Hz]
+% K_w_M = 1; % [1/Hz]
+% 
+% %% conversions
+% gf2N = 1/101.971621;
+% Nmm2Nm = 1/1000;
 
 %% Data Tables
 % pitch
