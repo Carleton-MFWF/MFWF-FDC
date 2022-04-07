@@ -31,7 +31,7 @@ bool toggle_input(void *) {
 void setup() {
 
 
-  // call the toggle_led function every 1000 millis (1 second)
+  // call the toggle_input function every 1000 millis (1 second)
   timer.every(timestep, toggle_input);
   
   Serial.begin(115200); //Higher rate
