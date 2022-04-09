@@ -7,3 +7,5 @@
     - Aerospace Blockset
     - UAV Toolbox
     - Sensor Fusion and Tracking Toolbox
+    - Embedded Coder
+    - Simulink Coder
