@@ -9,3 +9,5 @@
     - Sensor Fusion and Tracking Toolbox
     - Embedded Coder
     - Simulink Coder
+    - Phased Array System Toolbox
+    - Simulink 3D Animation
