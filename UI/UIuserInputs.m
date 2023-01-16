@@ -6,8 +6,9 @@ inputs = struct;
 
 %Sensor Inputs
 inputs.Sensor.Ideal = 1;
-%Plant Inputs
 
+%Plant Inputs
+inputs.Plant.Aerodynamics.cycleAverage = 0;
 %Controller Inputs
 
 %Visualization Inputs
