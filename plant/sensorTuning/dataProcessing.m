@@ -81,12 +81,12 @@ data = readmatrix("Data7Hr_V2.txt");
 
 
     [magVar,magtau] = allanvar(magOmega,m,fs);
-
-    loglog(magtau,magVar(:,1));
-    xlabel('\tau')
-    ylabel('\sigma(\tau)')
-    title('Magnetometer Allan Variance')
-    grid on
+% 
+%     loglog(magtau,magVar(:,1));
+%     xlabel('\tau')
+%     ylabel('\sigma(\tau)')
+%     title('Magnetometer Allan Variance')
+%     grid on
 
 %based on the spec sheet
 %gyro variance
