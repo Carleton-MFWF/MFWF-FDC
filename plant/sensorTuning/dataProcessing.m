@@ -36,7 +36,7 @@ data = readmatrix("Data7Hr_V2.txt");
     %Allan variance function applied to the whole matrix
     fs = 30; %sample frequency in hertz
     t0 = 1/fs; %Sampl period
-    n = 7*60*60*30; %sample count %hrs*mins*secs*sampling ~822647
+    n = 822646; %sample count
     
     %Time integrated output angle
     thetax = cumsum(gyroOmega(:,1), 1)*t0; % can use cumulative sum for discrete samples
