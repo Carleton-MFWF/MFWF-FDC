@@ -12,7 +12,8 @@ inputs.Plant.Aerodynamics.cycleAverage = 0;
 %Controller Inputs
 
 %Visualization Inputs
-inputs.Vizualization.animation = 0;
+inputs.Visualization.animation = 0;
+inputs.Visualization.presentation = 0;
 
 %Commands Inputs
 inputs.Commands.xCommand = timeseries;
